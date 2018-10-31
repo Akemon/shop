@@ -25,7 +25,7 @@
     delete from mmall_category
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hk.shop.pojo.Category">
+  <insert id="insert" parameterType="com.hk.shop.pojo.Category" useGeneratedKeys="true">
     insert into mmall_category (id, parent_id, name, 
       status, sort_order, create_time, 
       update_time)
@@ -116,4 +116,11 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getCategory" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mmall_category
+    where parent_id = #{categoryId}
+  </select>
+
 </mapper>

@@ -17,12 +17,19 @@ import javax.servlet.http.HttpSession;
  * @date 2018/10/30 22:35
  */
 @Controller
-@RequestMapping("/manage/user")
+@RequestMapping("/manage/user/")
 public class UserManagerController {
 
     @Autowired
     private IUserService userService;
 
+    /***
+     * 管理员登陆
+     * @param username
+     * @param password
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "login.do" ,method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session){
