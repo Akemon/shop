@@ -176,4 +176,24 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mmall_product
+  </select>
+
+  <select id="getSearchProduct" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_product
+    <where>
+      <if test="productId != null">
+        and id = #{productId}
+      </if>
+      <if test="productName != null">
+        and name like #{productName}
+      </if>
+    </where>
+  </select>
 </mapper>

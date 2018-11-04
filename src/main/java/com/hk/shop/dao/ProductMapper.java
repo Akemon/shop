@@ -1,6 +1,9 @@
 package com.hk.shop.dao;
 
 import com.hk.shop.pojo.Product;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,10 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    //获取所有商品
+    List<Product> getAllProduct();
+
+    //获取搜索商品
+    List<Product> getSearchProduct(@Param("productId") Integer productId,@Param("productName") String productName);
 }
