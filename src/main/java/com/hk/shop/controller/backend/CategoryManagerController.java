@@ -102,7 +102,7 @@ public class CategoryManagerController {
      */
     @RequestMapping(value = "get_deep_category.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<Category>> getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
+    public ServerResponse<List<Integer>> getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null) return ServerResponse.createByError(ResponseCode.NEDD_LOGIN.getCode(),"用户未登录，请登录");
         //判断是否为管理员
