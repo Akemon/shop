@@ -43,7 +43,7 @@
       #{receiverZip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, now()
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.hk.shop.pojo.Shipping">
+  <insert id="insertSelective" parameterType="com.hk.shop.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
     insert into mmall_shipping
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -176,4 +176,25 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteByUserIdAndShippingId" parameterType="map" >
+    delete from mmall_shipping
+    where user_id = #{userId}
+    and id = #{shippingId}
+  </delete>
+
+  <select id="getShippingByUserIdAndShippingId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_shipping
+    where user_id = #{userId}
+    and id = #{shippingId}
+  </select>
+
+  <select id="getShippingList" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_shipping
+    where user_id = #{userId}
+  </select>
 </mapper>

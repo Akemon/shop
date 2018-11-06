@@ -1,6 +1,7 @@
 package com.hk.shop.dao;
 
 import com.hk.shop.pojo.Order;
+import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,10 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    //通过用户id和订单id查询订单
+    Order getOrderByUserIdAndOrderNo(@Param("userId") Integer userId,@Param("orderNo") Long orderNo);
+
+    //通过订单id查询订单
+    Order selectByOrderNo(Long orderNo);
 }
