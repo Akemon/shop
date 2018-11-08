@@ -19,4 +19,10 @@ public interface OrderItemMapper {
     int updateByPrimaryKey(OrderItem record);
 
     List<OrderItem> getByOrderNoAndUserId(@Param("orderNo")Long orderNo,@Param("userId")Integer userId);
+
+    //批量插入数据
+    int batchInsert(@Param("orderItemList") List<OrderItem> orderItemList);
+
+    //获取订单的商品信息
+    List<OrderItem> getByUserId(@Param("userId")Integer userId);
 }

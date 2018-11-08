@@ -35,4 +35,7 @@ public interface CartMapper {
 
     //获取购物车的商品数量
     int getCartProductCountByUserId(Integer userId);
+
+    //获取选中的购物车信息
+    List<Cart> getCartListCheckedByUserId(Integer userId);
 }

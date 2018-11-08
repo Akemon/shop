@@ -14,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +34,98 @@ public class OrderController {
 
     @Autowired
     private IOrderService orderService;
+
+
+    /***
+     * 创建订单
+     * @param session
+     * @param shippingId
+     * @return
+     */
+    @RequestMapping(value = "create.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse create(HttpSession session,Integer shippingId){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user!= null){
+            return orderService.createOrder(user.getId(),shippingId);
+        }
+        return ServerResponse.createByError("用户未登陆,请登录");
+    }
+
+    /***
+     * 获取订单的商品信息
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "get_order_cart_product.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getOrderCartProduct(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user!= null){
+            return orderService.getOrderCartProduct(user.getId());
+        }
+        return ServerResponse.createByError("用户未登陆,请登录");
+    }
+
+    /***
+     * 订单List
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "list.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getList(HttpSession session,
+                                  @RequestParam(value = "pageNum" ,defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize" ,defaultValue = "10") Integer pageSize){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user!= null){
+            return orderService.getList(user.getId(),pageNum,pageSize);
+        }
+        return ServerResponse.createByError("用户未登陆,请登录");
+    }
+
+    /***
+     * 获取订单详情
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "detail.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getDetail(HttpSession session,Long orderNo){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user!= null){
+            return orderService.getDetail(user.getId(),orderNo);
+        }
+        return ServerResponse.createByError("用户未登陆,请登录");
+    }
+
+    /***
+     * 取消订单
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "cancel.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse cancelOrder(HttpSession session,Long orderNo){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user!= null){
+            return orderService.cancelOrder(user.getId(),orderNo);
+        }
+        return ServerResponse.createByError("用户未登陆,请登录");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /***
      * 支付

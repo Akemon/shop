@@ -204,7 +204,10 @@
     <include refid="Base_Column_List"></include>
     from mmall_order
     where order_no = #{orderNo}
-    and user_id = #{userId}
+    <if test="userId !=null">
+      and user_id = #{userId}
+    </if>
+
   </select>
 
   <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="long">
@@ -212,5 +215,19 @@
     <include refid="Base_Column_List"></include>
     from mmall_order
     where order_no = #{orderNo}
+  </select>
+  <select id="getOrderList" parameterType="int" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    <if test="userId != null">
+    where  user_id = #{userId}
+    </if>
+  </select>
+  <select id="searchByOrderNo" parameterType="long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from mmall_order
+    where order_no =#{orderNo}
   </select>
 </mapper>

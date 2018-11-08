@@ -19,7 +19,9 @@ public class Const {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
     }
     public enum ProductStatusEnum{
-        ON_SELL(1,"销售中");
+        ON_SELL(1,"销售中"),
+        DOWN(2,"下架"),
+        DELETE(3,"已删除");
         private Integer code;
         private String desc;
 
@@ -69,6 +71,14 @@ public class Const {
         public String getValue() {
             return value;
         }
+
+        public static OrderStatus codeOf(Integer code){
+            for(OrderStatus orderStatus:values()){
+                if(code == orderStatus.getCode()) return orderStatus;
+            }
+            throw new  RuntimeException("没有找到该枚举");
+        }
+
     }
     public interface AlipayCallback{
         String TRADE_STATUS_WAIT_BUYER_PAY="WAIT_BUYER_PAY";
@@ -86,6 +96,37 @@ public class Const {
         PayPlatformEnum(int code, String value) {
             this.code = code;
             this.value = value;
+        }
+
+        public static PayPlatformEnum codeOf(Integer code){
+            for(PayPlatformEnum paymentTypeEnum:values()){
+                if(code == paymentTypeEnum.getCode()) return paymentTypeEnum;
+            }
+            throw new  RuntimeException("没有找到该枚举");
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+    public enum PaymentTypeEnum{
+        ONLINE_PAY(1,"在线支付");
+        private int code;
+        private String value;
+
+        PaymentTypeEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+        public static PaymentTypeEnum codeOf(Integer code){
+            for(PaymentTypeEnum paymentTypeEnum:values()){
+                if(code == paymentTypeEnum.getCode()) return paymentTypeEnum;
+            }
+            throw new  RuntimeException("没有找到该枚举");
         }
 
         public int getCode() {

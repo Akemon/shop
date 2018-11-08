@@ -162,4 +162,12 @@
      from mmall_cart
      where user_id = #{userId}
   </select>
+
+  <select id="getCartListCheckedByUserId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_cart
+    where checked = 1
+    and user_id = #{userId}
+  </select>
 </mapper>
